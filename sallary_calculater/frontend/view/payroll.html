@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payroll Management</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="../css/payroll.css">
+</head>
+<body>
+
+<div class="container">
+  <h2 class="text-center mb-4">Payroll Management</h2>
+
+  <!-- Payroll Calculation Form -->
+  <div class="card p-4 mb-4">
+    <h4 class="mb-3">Calculate Payroll</h4>
+    <form id="payrollForm">
+      <div class="row">
+        <div class="col-md-6">
+          <label class="form-label">Employee ID</label>
+          <input type="text" class="form-control" id="employeeId" list="employeeList" oninput="autoFillEmployeeDetails()">
+          <datalist id="employeeList">
+            <option value="EMP001">Udantha Panthaka - Site Engineer</option>
+            <option value="EMP002">Saman Kumara - Project Manager</option>
+            <option value="EMP003">Ravishka Mendis - Accountant</option>
+          </datalist>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Employee Name</label>
+          <input type="text" class="form-control" id="employeeName" readonly>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label class="form-label">Role</label>
+          <input type="text" class="form-control" id="role" readonly>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Month</label>
+          <input type="number" class="form-control" id="month" min="1" max="12" required>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label class="form-label">Year</label>
+          <input type="number" class="form-control" id="year" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Total Earnings (LKR)</label>
+          <input type="number" class="form-control" id="totalEarnings" required>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label class="form-label">Total Deductions (LKR)</label>
+          <input type="number" class="form-control" id="totalDeductions" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Net Salary (LKR)</label>
+          <input type="text" class="form-control text-success" id="netSalary" readonly>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary mt-3" onclick="calculateNetSalary()">Calculate</button>
+    </form>
+  </div>
+
+  <!-- Payroll Table -->
+  <div class="card p-4">
+    <h4 class="mb-3">Payroll Records</h4>
+    <table class="table table-striped">
+      <thead class="table-dark">
+      <tr>
+        <th>Payroll ID</th>
+        <th>Employee Name</th>
+        <th>Role</th>
+        <th>Month</th>
+        <th>Year</th>
+        <th>Total Earnings (LKR)</th>
+        <th>Total Deductions (LKR)</th>
+        <th>Net Salary (LKR)</th>
+      </tr>
+      </thead>
+      <tbody id="payrollTableBody">
+      <!-- Payroll data will be added here dynamically -->
+      </tbody>
+    </table>
+  </div>
+</div>
+<script src="../js/payroll.js"></script>
+
+</body>
+</html>

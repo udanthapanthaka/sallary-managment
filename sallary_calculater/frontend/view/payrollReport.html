@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payroll Report Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/payrollReport.css">
+</head>
+<body>
+<div class="container mt-4">
+  <h2 class="text-center">Payroll Report Management</h2>
+
+  <!-- Form to Add Payroll Report -->
+  <div class="card p-3 mt-3">
+    <h4>Add Payroll Report</h4>
+    <form id="payrollReportForm">
+      <div class="mb-3">
+        <label for="reportId" class="form-label">Report ID</label>
+        <input type="text" class="form-control" id="reportId" required>
+      </div>
+      <div class="mb-3">
+        <label for="payrollId" class="form-label">Payroll ID</label>
+        <input type="text" class="form-control" id="payrollId" required>
+      </div>
+      <div class="mb-3">
+        <label for="employeeId" class="form-label">Employee ID</label>
+        <input type="text" class="form-control" id="employeeId" required>
+      </div>
+      <div class="mb-3">
+        <label for="month" class="form-label">Month</label>
+        <input type="number" class="form-control" id="month" min="1" max="12" required>
+      </div>
+      <div class="mb-3">
+        <label for="year" class="form-label">Year</label>
+        <input type="number" class="form-control" id="year" required>
+      </div>
+      <div class="mb-3">
+        <label for="totalEarnings" class="form-label">Total Earnings</label>
+        <input type="number" class="form-control" id="totalEarnings" required>
+      </div>
+      <div class="mb-3">
+        <label for="deductions" class="form-label">Deductions</label>
+        <input type="number" class="form-control" id="deductions" required>
+      </div>
+      <div class="mb-3">
+        <label for="netSalary" class="form-label">Net Salary</label>
+        <input type="number" class="form-control" id="netSalary" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Report</button>
+    </form>
+  </div>
+
+  <!-- Payroll Reports Table -->
+  <div class="mt-4">
+    <h4>Payroll Reports</h4>
+    <table class="table table-bordered table-striped">
+      <thead>
+      <tr>
+        <th>Report ID</th>
+        <th>Payroll ID</th>
+        <th>Employee ID</th>
+        <th>Month</th>
+        <th>Year</th>
+        <th>Total Earnings</th>
+        <th>Deductions</th>
+        <th>Net Salary</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody id="payrollReportTable">
+      <!-- Dynamic Data -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

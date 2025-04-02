@@ -1,0 +1,10 @@
+body {
+  /* background-color: #e9eaf5; */
+  background: linear-gradient(to right, #d1d3d4, #949292);
+}
+.modal-header{
+  background-color: #878787;
+}
+h2{
+  margin-bottom: 25px;
+}
