@@ -1,20 +1,98 @@
-body {
-  background-color: #02274a;
-}
+/* department.css */
 
-.container {
-  max-width: 600px;
-  background: #676666;
+body {
+  background: linear-gradient(to right, #e5eef8, #c7d0e1);
+  font-family: 'Poppins', sans-serif;
+  color: #333;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-  color: #343a40;
-  margin-bottom: 20px;
+  font-weight: 700;
+  color: #424141;
+  text-shadow: 1px 1px 2px #00000030;
 }
 
-.table th, .table td {
-  text-align: center;
+.card {
+  border: none;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.01);
+}
+
+.form-label {
+  font-weight: 500;
+  color: #333;
+}
+
+.form-control {
+  border-radius: 0.75rem;
+  border: 2px solid #8e44ad;
+  padding: 0.75rem;
+  background-color: #f3ecf9;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #6f42c1;
+  box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.3);
+  background-color: #fff;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #6f42c1, #8e44ad);
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.6rem 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #5a339c, #732d91);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.6rem 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  transition: background 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #7b8a8b, #636e72);
+}
+
+.table {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.table thead {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.95rem;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+  font-size: 0.9rem;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f0e9ff;
+  transition: background-color 0.2s ease;
 }

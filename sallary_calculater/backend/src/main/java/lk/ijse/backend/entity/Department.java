@@ -28,7 +28,6 @@ public class Department {
     public Department() {
 
     }
-
     public Long getId() {
         return id;
     }

@@ -5,7 +5,7 @@ import java.util.Date;
 public class LeaveDTO {
 
     private Long id;
-    private String employeeId;  // Storing only the employee ID instead of the full Employee object
+    private Long employeeId;
     private String leaveType;
     private Date startDate;
     private Date endDate;
@@ -13,7 +13,7 @@ public class LeaveDTO {
     public LeaveDTO() {
     }
 
-    public LeaveDTO(Long id, String employeeId, String leaveType, Date startDate, Date endDate) {
+    public LeaveDTO(Long id, Long employeeId, String leaveType, Date startDate, Date endDate) {
         this.id = id;
         this.employeeId = employeeId;
         this.leaveType = leaveType;
@@ -21,8 +21,8 @@ public class LeaveDTO {
         this.endDate = endDate;
     }
 
-    // Getters and Setters
     public Long getId() {
+
         return id;
     }
 
@@ -30,11 +30,11 @@ public class LeaveDTO {
         this.id = id;
     }
 
-    public String getEmployeeId() {
+    public Long getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(String employeeId) {
+    public void setEmployeeId(Long employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -66,7 +66,7 @@ public class LeaveDTO {
     public String toString() {
         return "LeaveDTO{" +
                 "id=" + id +
-                ", employeeId='" + employeeId + '\'' +
+                ", employeeId=" + employeeId +
                 ", leaveType='" + leaveType + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +

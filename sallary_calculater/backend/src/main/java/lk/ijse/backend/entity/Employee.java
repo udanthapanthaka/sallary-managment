@@ -8,14 +8,11 @@ import java.util.Date;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
-
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;
@@ -23,6 +20,7 @@ public class Employee {
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "hire_date", nullable = false)
     private Date hireDate;
 
@@ -36,10 +34,9 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String id, String firstName, String lastName, String email, String phoneNumber, Date hireDate, Double salary, Department department) {
+    public Employee(Long id, String name, String email, String phoneNumber, Date hireDate, Double salary, Department department) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.hireDate = hireDate;
@@ -47,28 +44,20 @@ public class Employee {
         this.department = department;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -114,9 +103,8 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "id='" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", hireDate=" + hireDate +

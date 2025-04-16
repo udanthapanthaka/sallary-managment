@@ -26,15 +26,31 @@ public class UserController {
         }
     }
 
-    // Login method
+//    @PostMapping("/login")
+//    public ResponseEntity<String> loginUser(@RequestParam String username, @RequestParam String password) {
+//        UserDTO user = userService.loginUser(username, password);
+//        if (user != null) {
+//            return ResponseEntity.ok("Login successful");
+//        } else {
+//            return ResponseEntity.status(401).body("Invalid credentials");
+//        }
+//    }
+//    @PostMapping("/login")
+//    public ResponseEntity<String> loginUser(@RequestParam String username, @RequestParam String password) {
+//        UserDTO user = userService.loginUser(username, password);
+//        if (user != null) {
+//            return ResponseEntity.ok("Login successful");
+//        } else {
+//            return ResponseEntity.status(401).body("Invalid username or password");
+//        }
+//    }
+
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestParam String username, @RequestParam String password) {
         UserDTO user = userService.loginUser(username, password);
-        if (user != null) {
-            return ResponseEntity.ok("Login successful");
-        } else {
-            return ResponseEntity.status(401).body("Invalid credentials");
-        }
+        return (user != null)
+                ? ResponseEntity.ok("Login successful")
+                : ResponseEntity.status(401).body("Invalid username/password");
     }
 
     @PutMapping("/update")

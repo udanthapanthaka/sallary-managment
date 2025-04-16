@@ -8,8 +8,8 @@ import java.util.Date;
 public class Payroll {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "employee_id", nullable = false)
@@ -27,7 +27,7 @@ public class Payroll {
     @Column(name = "pay_date")
     private Date payDate;
 
-    public Payroll(String id, Employee employee, Double baseSalary, Double bonus, Double netSalary, Date payDate) {
+    public Payroll(Long id, Employee employee, Double baseSalary, Double bonus, Double netSalary, Date payDate) {
         this.id = id;
         this.employee = employee;
         this.baseSalary = baseSalary;
@@ -39,11 +39,11 @@ public class Payroll {
     public Payroll() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -90,7 +90,7 @@ public class Payroll {
     @Override
     public String toString() {
         return "Payroll{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", employee=" + employee +
                 ", baseSalary=" + baseSalary +
                 ", bonus=" + bonus +

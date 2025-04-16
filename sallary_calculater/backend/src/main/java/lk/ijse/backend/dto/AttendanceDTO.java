@@ -5,7 +5,7 @@ import java.util.Date;
 public class AttendanceDTO {
 
     private Long id;
-    private String employeeId;
+    private Long employeeId;
     private Date attendanceDate;
     private LocalTime onTime;
     private LocalTime offTime;
@@ -13,7 +13,7 @@ public class AttendanceDTO {
     public AttendanceDTO() {
     }
 
-    public AttendanceDTO(Long id, String employeeId, Date attendanceDate, LocalTime onTime, LocalTime offTime) {
+    public AttendanceDTO(Long id, Long employeeId, Date attendanceDate, LocalTime onTime, LocalTime offTime) {
         this.id = id;
         this.employeeId = employeeId;
         this.attendanceDate = attendanceDate;
@@ -29,11 +29,11 @@ public class AttendanceDTO {
         this.id = id;
     }
 
-    public String getEmployeeId() {
+    public Long getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(String employeeId) {
+    public void setEmployeeId(Long employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -65,7 +65,7 @@ public class AttendanceDTO {
     public String toString() {
         return "AttendanceDTO{" +
                 "id=" + id +
-                ", employeeId='" + employeeId + '\'' +
+                ", employeeId=" + employeeId +
                 ", attendanceDate=" + attendanceDate +
                 ", onTime=" + onTime +
                 ", offTime=" + offTime +

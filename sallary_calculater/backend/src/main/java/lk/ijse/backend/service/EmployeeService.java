@@ -7,9 +7,11 @@ public interface EmployeeService {
 
     EmployeeDTO saveEmployee(EmployeeDTO employeeDTO);
 
-    void deleteEmployee(String id);
+    void deleteEmployee(Long id);
 
     EmployeeDTO updateEmployee(EmployeeDTO employeeDTO);
 
     List<EmployeeDTO> getAllEmployees();
+
+    EmployeeDTO getEmployeeById(Long employeeId);//from payroll
 }

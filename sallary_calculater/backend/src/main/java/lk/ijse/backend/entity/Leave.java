@@ -14,13 +14,14 @@ public class Leave {
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
-
     @Column(name = "leave_type", nullable = false)
     private String leaveType;  // (Sick, Vacation, etc.)
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "start_date", nullable = false)
     private Date startDate;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "end_date", nullable = false)
     private Date endDate;
 

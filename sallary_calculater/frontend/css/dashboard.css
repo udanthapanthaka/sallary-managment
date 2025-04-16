@@ -1,44 +1,197 @@
-body {
-  /* background-color: #e9eaf5; */
-  background: linear-gradient(to right, #d1d3d4, #949292);
+:root {
+  --primary-color: #4361ee;
+  --secondary-color: #3f37c9;
+  --accent-color: #4895ef;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+  --success-color: #4cc9f0;
+  --danger-color: #f72585;
+  --warning-color: #f8961e;
+  --info-color: #90e0ef;
 }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  color: var(--dark-color);
+}
+
 .sidebar {
-  width: 240px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
   height: 100vh;
   position: fixed;
-  background-color: #232121;
-  color: white;
   padding-top: 20px;
-}
-.sidebar a {
-  padding: 13px 40px;
-  display: block;
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: 500;
-}
-.sidebar a:hover {
-  background-color: #495057;
-}
-.sidebar h4 {
-  padding: 15px 40px;
-  display: block;
-  color: white;
-  text-decoration: none;
-  border-bottom: 3px solid #9ea0a1;
-  text-transform: uppercase;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  z-index: 1000;
 }
 
-
-.text-center{
-  padding: 10px 20px;
+.sidebar .nav-link {
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  margin: 5px 10px;
+  padding: 10px 15px;
+  transition: all 0.3s;
 }
-.content {
-  margin-left: 260px;
+
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.sidebar .nav-link i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}
+
+.main-content {
+  margin-left: 250px;
   padding: 20px;
-
+  min-height: 100vh;
 }
+
 .card {
+  border: none;
   border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  margin-bottom: 20px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-header {
+  background-color: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+  border-radius: 10px 10px 0 0 !important;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.btn-success {
+  background-color: var(--success-color);
+  border-color: var(--success-color);
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+}
+
+.btn-warning {
+  background-color: var(--warning-color);
+  border-color: var(--warning-color);
+}
+
+.btn-info {
+  background-color: var(--info-color);
+  border-color: var(--info-color);
+  color: var(--dark-color);
+}
+
+.table th {
+  background-color: var(--light-color);
+  font-weight: 600;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.status-badge {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-active {
+  background-color: rgba(76, 201, 240, 0.1);
+  color: var(--success-color);
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  padding-left: 40px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.search-box i {
+  position: absolute;
+  left: 15px;
+  top: 12px;
+  color: #6c757d;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-footer {
+  border-top: none;
+}
+
+.content-container {
+  display: none;
+}
+
+.content-container.active {
+  display: block;
+}
+
+.dashboard-stat {
+  border-left: 4px solid var(--primary-color);
+  padding-left: 15px;
+}
+
+.stat-attendance {
+  border-left-color: var(--success-color);
+}
+
+.stat-leave {
+  border-left-color: var(--warning-color);
+}
+
+.stat-overtime {
+  border-left-color: var(--danger-color);
+}
+
+.stat-payroll {
+  border-left-color: var(--info-color);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .main-content {
+    margin-left: 0;
+  }
 }

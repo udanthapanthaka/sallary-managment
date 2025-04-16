@@ -9,8 +9,8 @@ import java.util.UUID;
 public class OverTime {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID) // Generates a unique UUID
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "employee_id", nullable = false)
@@ -22,13 +22,16 @@ public class OverTime {
     @Column(name = "overtime_rate", nullable = false)
     private Double overtimeRate;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "overtime_date", nullable = false)
     private Date overtimeDate;
 
     @Column(name = "total_overtime_pay")
     private Double totalOvertimePay; // Auto-calculated overtime pay
 
-    public OverTime(String id, Employee employee, Double overtimeHours, Double overtimeRate, Date overtimeDate, Double totalOvertimePay) {
+
+
+    public OverTime(Long id, Employee employee, Double overtimeHours, Double overtimeRate, Date overtimeDate, Double totalOvertimePay) {
         this.id = id;
         this.employee = employee;
         this.overtimeHours = overtimeHours;
@@ -37,14 +40,13 @@ public class OverTime {
         this.totalOvertimePay = totalOvertimePay;
     }
 
-    public OverTime() {
-    }
+    public OverTime() {}
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -91,7 +93,7 @@ public class OverTime {
     @Override
     public String toString() {
         return "OverTime{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", employee=" + employee +
                 ", overtimeHours=" + overtimeHours +
                 ", overtimeRate=" + overtimeRate +

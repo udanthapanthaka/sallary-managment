@@ -2,10 +2,11 @@ package lk.ijse.backend.controller;
 
 import lk.ijse.backend.dto.DepartmentDTO;
 import lk.ijse.backend.service.DepartmentService;
-import lk.ijse.backend.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/departments")
@@ -15,26 +16,27 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    @GetMapping(path = "getAll")
-    public ResponseUtil getAllDepartments() {
-        return new ResponseUtil(200, "Department List", departmentService.getAllDepartments());
+    @GetMapping("/getAll")
+    public ResponseEntity<List<DepartmentDTO>> getAllDepartments() {
+        List<DepartmentDTO> departments = departmentService.getAllDepartments();
+        return ResponseEntity.ok(departments); // 200 OK
     }
 
-    @PostMapping(path = "save")
-    public ResponseUtil addDepartment(@RequestBody DepartmentDTO departmentDTO) {
+    @PostMapping("/save")
+    public ResponseEntity<String> addDepartment(@RequestBody DepartmentDTO departmentDTO) {
         departmentService.saveDepartment(departmentDTO);
-        return new ResponseUtil(201, "Department Saved Successfully", null);
+        return ResponseEntity.status(201).body("Department Saved Successfully");
     }
 
-    @PutMapping(path = "update")
-    public ResponseUtil updateDepartment(@RequestBody DepartmentDTO departmentDTO) {
+    @PutMapping("/update")
+    public ResponseEntity<String> updateDepartment(@RequestBody DepartmentDTO departmentDTO) {
         departmentService.updateDepartment(departmentDTO);
-        return new ResponseUtil(201, "Department Updated Successfully", null);
+        return ResponseEntity.ok("Department Updated Successfully");
     }
 
-    @DeleteMapping(path = "delete/{id}")
-    public ResponseUtil deleteDepartment(@PathVariable("id") Long id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteDepartment(@PathVariable Long id) {
         departmentService.deleteDepartment(id);
-        return new ResponseUtil(201, "Department Deleted Successfully", null);
+        return ResponseEntity.ok("Department Deleted Successfully");
     }
 }

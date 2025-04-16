@@ -2,8 +2,8 @@ package lk.ijse.backend.controller;
 
 import lk.ijse.backend.dto.EmployeeDTO;
 import lk.ijse.backend.service.EmployeeService;
-import lk.ijse.backend.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,25 +16,27 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @PostMapping(path = "save")
-    public ResponseUtil saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
+    @PostMapping("/save")
+    public ResponseEntity<String> saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
         employeeService.saveEmployee(employeeDTO);
-        return new ResponseUtil(201, "employee saved successfully", null);
+        return ResponseEntity.status(201).body("Employee saved successfully");
     }
 
-    @PutMapping(path = "update")
-    public ResponseUtil updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
+    @PutMapping("/update")
+    public ResponseEntity<String> updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
         employeeService.updateEmployee(employeeDTO);
-        return new ResponseUtil(201, "employee updated successfully", null);
-    }
-    @GetMapping(path = "getAll")
-    public ResponseUtil getAllEmployees() {
-        List<EmployeeDTO> employeeDTOList = employeeService.getAllEmployees();
-        return new ResponseUtil(200, "employee list", employeeDTOList);
+        return ResponseEntity.ok("Employee updated successfully");
     }
 
-    @DeleteMapping(path = "delete/{id}")
-    public void deleteEmployee(@PathVariable("id") String id) {
+    @GetMapping("/getAll")
+    public ResponseEntity<List<EmployeeDTO>> getAllEmployees() {
+        List<EmployeeDTO> employeeDTOList = employeeService.getAllEmployees();
+        return ResponseEntity.ok(employeeDTOList); // 200 OK
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable("id") Long id) {
         employeeService.deleteEmployee(id);
+        return ResponseEntity.ok("Employee deleted successfully");
     }
 }

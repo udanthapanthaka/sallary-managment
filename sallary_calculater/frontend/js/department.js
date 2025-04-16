@@ -1,61 +1,93 @@
-document.addEventListener("DOMContentLoaded", function () {
-  loadDepartments();
+$(document).ready(function () {
+  // Load departments on page load
+  loadAllDepartments();
 
-  document.getElementById("departmentForm").addEventListener("submit", function (event) {
-    event.preventDefault();
+  // Bind save button click event
+  $('#departmentForm').on('submit', function (e) {
+    e.preventDefault();
     saveDepartment();
   });
 });
 
-function loadDepartments() {
-  fetch("http://localhost:8080/api/v1/departments/getAll")
-    .then(response => response.json())
-    .then(data => {
-      const tableBody = document.getElementById("departmentTableBody");
-      tableBody.innerHTML = "";
-      data.data.forEach(department => {
-        tableBody.innerHTML += `
-                    <tr>
-                        <td>${department.id}</td>
-                        <td>${department.departmentName}</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" onclick="editDepartment(${department.id}, '${department.departmentName}')">Edit</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteDepartment(${department.id})">Delete</button>
-                        </td>
-                    </tr>`;
-      });
-    });
-}
-
+// Save or update department
 function saveDepartment() {
-  const id = document.getElementById("departmentId").value;
-  const name = document.getElementById("departmentName").value;
+  let name = $('#departmentName').val();
+  let id = $('#departmentId').val();
 
-  const department = {
-    id: id ? parseInt(id) : null,
-    departmentName: name
-  };
-
-  const method = id ? "PUT" : "POST";
-  const url = id ? "http://localhost:8080/api/v1/departments/update" : "http://localhost:8080/api/v1/departments/save";
-
-  fetch(url, {
-    method: method,
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(department)
-  }).then(() => {
-    document.getElementById("departmentForm").reset();
-    document.getElementById("departmentId").value = "";
-    loadDepartments();
+  $.ajax({
+    method: "POST",
+    contentType: "application/json",
+    url: "http://localhost:8081/api/v1/departments/save",
+    async: true,
+    data: JSON.stringify({
+      id: id,
+      departmentName: name
+    }),
+    success: function () {
+      alert("Department saved!");
+      resetForm();
+      loadAllDepartments();
+    },
+    error: function () {
+      alert("Error saving department");
+    }
   });
 }
 
-function editDepartment(id, name) {
-  document.getElementById("departmentId").value = id;
-  document.getElementById("departmentName").value = name;
+// Load all departments into table
+function loadAllDepartments() {
+  $.ajax({
+    method: "GET",
+    url: "http://localhost:8081/api/v1/departments/getAll",
+    success: function (departments) {
+      let tableBody = $('#departmentTableBody');
+      tableBody.empty(); // clear previous rows
+
+      departments.forEach(dept => {
+        let row = `
+          <tr>
+            <td>${dept.id}</td>
+            <td>${dept.departmentName}</td>
+            <td>
+              <button class="btn btn-sm btn-warning" onclick="editDepartment(${dept.id}, '${dept.departmentName}')">Edit</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteDepartment(${dept.id})">Delete</button>
+            </td>
+          </tr>
+        `;
+        tableBody.append(row);
+      });
+    },
+    error: function () {
+      alert("Failed to load departments");
+    }
+  });
 }
 
+// Set form for editing
+function editDepartment(id, name) {
+  $('#departmentId').val(id);
+  $('#departmentName').val(name);
+}
+
+// Delete department
 function deleteDepartment(id) {
-  fetch(`http://localhost:8080/api/v1/departments/delete/${id}`, { method: "DELETE" })
-    .then(() => loadDepartments());
+  if (confirm("Are you sure you want to delete this department?")) {
+    $.ajax({
+      method: "DELETE",
+      url: `http://localhost:8081/api/v1/departments/delete/${id}`,
+      success: function () {
+        alert("Department deleted");
+        loadAllDepartments();
+      },
+      error: function () {
+        alert("Failed to delete department");
+      }
+    });
+  }
+}
+
+// Clear form
+function resetForm() {
+  $('#departmentId').val('');
+  $('#departmentName').val('');
 }

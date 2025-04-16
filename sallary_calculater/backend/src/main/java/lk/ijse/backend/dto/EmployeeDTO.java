@@ -4,22 +4,20 @@ import java.util.Date;
 
 public class EmployeeDTO {
 
-    private String id;
-    private String firstName;
-    private String lastName;
+    private Long id;
+    private String name;
     private String email;
     private String phoneNumber;
     private Date hireDate;
     private Double salary;
-    private Long departmentId; // Storing only the department ID instead of the full Department object
+    private Long departmentId;
 
     public EmployeeDTO() {
     }
 
-    public EmployeeDTO(String id, String firstName, String lastName, String email, String phoneNumber, Date hireDate, Double salary, Long departmentId) {
+    public EmployeeDTO(Long id, String name, String email, String phoneNumber, Date hireDate, Double salary, Long departmentId) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.hireDate = hireDate;
@@ -27,29 +25,20 @@ public class EmployeeDTO {
         this.departmentId = departmentId;
     }
 
-    // Getters and Setters
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -95,9 +84,8 @@ public class EmployeeDTO {
     @Override
     public String toString() {
         return "EmployeeDTO{" +
-                "id='" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", hireDate=" + hireDate +

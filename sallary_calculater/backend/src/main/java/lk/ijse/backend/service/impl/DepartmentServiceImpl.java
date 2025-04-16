@@ -57,15 +57,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDTO updateDepartment(DepartmentDTO departmentDTO) {
-//        departmentDTO.setId(null);
-//        if (departmentRepository.existsById(departmentDTO.getId())) {
-//            Department department =modelMapper.map(departmentDTO, Department.class);
-//            departmentRepository.save(department);
-//        }else{
-//            throw new RuntimeException("Department not found");
-//        }
+
         if (departmentRepository.existsById(departmentDTO.getId())) {
             departmentRepository.save(modelMapper.map(departmentDTO, Department.class));
+            return departmentDTO;
         }
         throw new RuntimeException("Department not found");
     }

@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class PayrollDTO {
 
-    private String id;
-    private String employeeId;  // Storing only the employee ID instead of the full Employee object
+    private Long id;
+    private Long employeeId;
     private Double baseSalary;
     private Double bonus;
     private Double netSalary;
@@ -14,7 +14,7 @@ public class PayrollDTO {
     public PayrollDTO() {
     }
 
-    public PayrollDTO(String id, String employeeId, Double baseSalary, Double bonus, Double netSalary, Date payDate) {
+    public PayrollDTO(Long id, Long employeeId, Double baseSalary, Double bonus, Double netSalary, Date payDate) {
         this.id = id;
         this.employeeId = employeeId;
         this.baseSalary = baseSalary;
@@ -23,20 +23,19 @@ public class PayrollDTO {
         this.payDate = payDate;
     }
 
-    // Getters and Setters
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getEmployeeId() {
+    public Long getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(String employeeId) {
+    public void setEmployeeId(Long employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -75,8 +74,8 @@ public class PayrollDTO {
     @Override
     public String toString() {
         return "PayrollDTO{" +
-                "id='" + id + '\'' +
-                ", employeeId='" + employeeId + '\'' +
+                "id=" + id +
+                ", employeeId=" + employeeId +
                 ", baseSalary=" + baseSalary +
                 ", bonus=" + bonus +
                 ", netSalary=" + netSalary +

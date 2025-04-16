@@ -27,20 +27,29 @@ public class UserServiceImpl implements UserService {
         return newUserDTO;
     }
 
+//    @Override
+//    public UserDTO loginUser(String username, String password) {
+//       User user= userRepository.findByUsername(username);
+//
+//       UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+//
+//        System.out.println("1 eka "+userDTO);
+//
+//       if (user.getPassword().equals(password)) {
+//           System.out.println(userDTO);
+//           return userDTO;
+//       }
+//       return null;
+//
+//    }
+
     @Override
     public UserDTO loginUser(String username, String password) {
-       User user= userRepository.findByUsername(username);
-
-       UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-
-        System.out.println("1 eka "+userDTO);
-
-       if (user.getPassword().equals(password)) {
-           System.out.println(userDTO);
-           return userDTO;
-       }
-       return null;
-
+        User user = userRepository.findByUsername(username);
+        if (user == null || !user.getPassword().equals(password)) {
+            return null;
+        }
+        return modelMapper.map(user, UserDTO.class);
     }
 
     @Override

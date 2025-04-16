@@ -27,7 +27,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeDTO;
     }
     @Override
-    public void deleteEmployee(String id) {
+    public void deleteEmployee(Long id) {
      employeeRepository.deleteById(id);
     }
 
@@ -36,6 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO) {
         if (employeeRepository.existsById(employeeDTO.getId())) {
             employeeRepository.save(modelMapper.map(employeeDTO, Employee.class));
+            return employeeDTO;
         }
         throw new RuntimeException("Employee not found");
     }
@@ -49,5 +50,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             employeeDTOS.add(employeeDTO);
         }
         return employeeDTOS;
+    }
+
+    @Override
+    public EmployeeDTO getEmployeeById(Long employeeId) {
+        return null;
     }
 }

@@ -5,7 +5,7 @@ import java.util.Date;
 public class OverTimeDTO {
 
     private String id;
-    private String employeeId;  // Storing only the employee ID instead of the full Employee object
+    private Long employeeId;
     private Double overtimeHours;
     private Double overtimeRate;
     private Date overtimeDate;
@@ -14,7 +14,7 @@ public class OverTimeDTO {
     public OverTimeDTO() {
     }
 
-    public OverTimeDTO(String id, String employeeId, Double overtimeHours, Double overtimeRate, Date overtimeDate, Double totalOvertimePay) {
+    public OverTimeDTO(String id, Long employeeId, Double overtimeHours, Double overtimeRate, Date overtimeDate, Double totalOvertimePay) {
         this.id = id;
         this.employeeId = employeeId;
         this.overtimeHours = overtimeHours;
@@ -23,7 +23,6 @@ public class OverTimeDTO {
         this.totalOvertimePay = totalOvertimePay;
     }
 
-    // Getters and Setters
     public String getId() {
         return id;
     }
@@ -32,11 +31,11 @@ public class OverTimeDTO {
         this.id = id;
     }
 
-    public String getEmployeeId() {
+    public Long getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(String employeeId) {
+    public void setEmployeeId(Long employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -76,7 +75,7 @@ public class OverTimeDTO {
     public String toString() {
         return "OverTimeDTO{" +
                 "id='" + id + '\'' +
-                ", employeeId='" + employeeId + '\'' +
+                ", employeeId=" + employeeId +
                 ", overtimeHours=" + overtimeHours +
                 ", overtimeRate=" + overtimeRate +
                 ", overtimeDate=" + overtimeDate +
