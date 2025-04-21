@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Attendance Tracker</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #10b981;
+            --accent-color: #8b5cf6;
+            --danger-color: #ef4444;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+            --gray-color: #94a3b8;
+            --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+            padding-top: 60px;
+            color: var(--dark-color);
+        }
+
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link.active {
+            color: white !important;
+            background-color: var(--primary-color);
+        }
+
+        .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            margin-bottom: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-card {
+            height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1.5rem;
+            color: white;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-card .card-icon {
+            position: absolute;
+            right: -15px;
+            bottom: -15px;
+            font-size: 7rem;
+            opacity: 0.2;
+        }
+
+        .dashboard-card .card-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-card .card-label {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: 1rem;
+            border-left: 5px solid var(--primary-color);
+            padding: 1.25rem;
+        }
+
+        .stats-card .icon {
+            background-color: rgba(79, 70, 229, 0.1);
+            color: var(--primary-color);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .stats-card.today {
+            border-left-color: var(--secondary-color);
+        }
+
+        .stats-card.today .icon {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .stats-card.absent {
+            border-left-color: var(--danger-color);
+        }
+
+        .stats-card.absent .icon {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-weight: 600;
+            padding: 1.25rem 1.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            font-weight: 500;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1.25rem;
+        }
+
+        .btn-primary:hover {
+            background-color: #4338ca;
+            border-color: #4338ca;
+        }
+
+        .btn-success {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-success:hover {
+            background-color: #059669;
+            border-color: #059669;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+
+        .table {
+            font-size: 0.9rem;
+        }
+
+        .table th {
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            padding: 1rem;
+        }
+
+        .table td {
+            padding: 1rem;
+            vertical-align: middle;
+        }
+
+        .status-badge {
+            padding: 0.35rem 0.65rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-present {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .status-absent {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+
+        .status-late {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+        }
+
+        .main-content {
+            padding: 2rem;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #6b7280;
+        }
+
+        .avatar-purple {
+            background-color: rgba(139, 92, 246, 0.1);
+            color: var(--accent-color);
+        }
+
+        .avatar-blue {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        .avatar-green {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding-left: 2.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-color);
+        }
+
+        .early-arrival {
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .late-arrival {
+            border-left: 3px solid #f59e0b;
+        }
+
+        .overtime {
+            background-color: rgba(79, 70, 229, 0.05);
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .action-btn-edit {
+            background-color: #f59e0b;
+        }
+
+        .action-btn-delete {
+            background-color: var(--danger-color);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-card {
+                height: 120px;
+            }
+
+            .dashboard-card .card-value {
+                font-size: 2rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+            <i class="fas fa-users-cog me-2"></i>Salary MS
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="employee.html">
+                        <i class="fas fa-user-tie me-1"></i> Employees
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="department.html">
+                        <i class="fas fa-building me-1"></i> Departments
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="attendance.html">
+                        <i class="fas fa-calendar-check me-1"></i> Attendance
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="leave.html">
+                        <i class="fas fa-calendar-minus me-1"></i> Leave
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="overtime.html">
+                        <i class="fas fa-clock me-1"></i> Overtime
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="payroll.html">
+                        <i class="fas fa-money-bill-wave me-1"></i> Payroll
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="users.html">
+                        <i class="fas fa-users me-1"></i> Users
+                    </a>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <div class="avatar avatar-purple me-3">JS</div>
+                <button class="btn btn-outline-danger btn-sm">
+                    <i class="fas fa-sign-out-alt me-1"></i> Logout
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <main class="col-12 main-content">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <h1 class="h3 fw-bold">Attendance Dashboard</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <button class="btn btn-success me-2">
+                        <i class="fas fa-sign-in-alt me-1"></i> Clock In
+                    </button>
+                    <button class="btn btn-danger me-2">
+                        <i class="fas fa-sign-out-alt me-1"></i> Clock Out
+                    </button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAttendanceModal">
+                        <i class="fas fa-plus me-1"></i> Record Attendance
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Cards -->
+            <div class="row mb-4">
+                <div class="col-md-4 mb-3">
+                    <div class="dashboard-card">
+                        <div class="card-value">86%</div>
+                        <div class="card-label">Overall Attendance Rate</div>
+                        <i class="fas fa-chart-line card-icon"></i>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row h-100">
+                        <div class="col-md-4 mb-3">
+                            <div class="stats-card d-flex align-items-center h-100">
+                                <div class="icon me-3">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                                <div>
+                                    <h3 class="h5 mb-1">156</h3>
+                                    <p class="text-muted mb-0">Total Check-ins</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="stats-card today d-flex align-items-center h-100">
+                                <div class="icon me-3">
+                                    <i class="fas fa-calendar-day"></i>
+                                </div>
+                                <div>
+                                    <h3 class="h5 mb-1">28</h3>
+                                    <p class="text-muted mb-0">Present Today</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="stats-card absent d-flex align-items-center h-100">
+                                <div class="icon me-3">
+                                    <i class="fas fa-user-times"></i>
+                                </div>
+                                <div>
+                                    <h3 class="h5 mb-1">4</h3>
+                                    <p class="text-muted mb-0">Absent Today</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label for="employeeFilter" class="form-label">Employee</label>
+                            <select class="form-select" id="employeeFilter">
+                                <option value="">All Employees</option>
+                                <option value="1">John Doe</option>
+                                <option value="2">Anna Smith</option>
+                                <option value="3">Robert Johnson</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="dateFilter" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="dateFilter">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="statusFilter" class="form-label">Status</label>
+                            <select class="form-select" id="statusFilter">
+                                <option value="">All Status</option>
+                                <option value="present">Present</option>
+                                <option value="absent">Absent</option>
+                                <option value="late">Late</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button class="btn btn-primary w-100">
+                                <i class="fas fa-search me-1"></i> Apply Filters
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attendance Table Card -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Attendance Records</h5>
+                    <div class="d-flex">
+                        <div class="search-box me-3">
+                            <i class="fas fa-search"></i>
+                            <input type="text" class="form-control" id="quickSearch" placeholder="Quick search...">
+                        </div>
+                        <button class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-sync-alt me-1"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Date</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                                <th>Hours</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="early-arrival">
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-blue me-3">JD</div>
+                                        <div>
+                                            <div class="fw-semibold">jagath disa</div>
+                                            <div class="text-muted small">ID: 1001</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>2025-04-22</td>
+                                <td>08:30 AM</td>
+                                <td>05:15 PM</td>
+                                <td>8.75</td>
+                                <td><span class="status-badge status-present">Present</span></td>
+                                <td>
+                                    <button class="action-btn action-btn-edit me-1">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn action-btn-delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="late-arrival">
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-green me-3">AS</div>
+                                        <div>
+                                            <div class="fw-semibold">akila sahan</div>
+                                            <div class="text-muted small">ID: 1002</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>2025-04-22</td>
+                                <td>09:45 AM</td>
+                                <td>05:30 PM</td>
+                                <td>7.75</td>
+                                <td><span class="status-badge status-late">Late</span></td>
+                                <td>
+                                    <button class="action-btn action-btn-edit me-1">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn action-btn-delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="overtime">
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-purple me-3">RJ</div>
+                                        <div>
+                                            <div class="fw-semibold">rashen jayath</div>
+                                            <div class="text-muted small">ID: 1003</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>2025-04-22</td>
+                                <td>08:00 AM</td>
+                                <td>07:00 PM</td>
+                                <td>11.00</td>
+                                <td><span class="status-badge status-present">Present</span></td>
+                                <td>
+                                    <button class="action-btn action-btn-edit me-1">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn action-btn-delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Attendance pagination" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Add Attendance Modal -->
+<div class="modal fade" id="addAttendanceModal" tabindex="-1" aria-labelledby="addAttendanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addAttendanceModalLabel">Record Attendance</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="attendanceForm">
+                    <div class="mb-3">
+                        <label for="employeeId" class="form-label">Employee</label>
+                        <select class="form-select" id="employeeId" required>
+                            <option value="">Select Employee</option>
+                            <option value="1">jagath disa </option>
+                            <option value="2">akila sahan </option>
+                            <option value="3">rashen jayath </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="attendanceDate" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="attendanceDate" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="onTime" class="form-label">Check In Time</label>
+                            <input type="time" class="form-control" id="onTime" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="offTime" class="form-label">Check Out Time</label>
+                            <input type="time" class="form-control" id="offTime" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="attendanceStatus" class="form-label">Status</label>
+                        <select class="form-select" id="attendanceStatus" required>
+                            <option value="present">Present</option>
+                            <option value="late">Late</option>
+                            <option value="absent">Absent</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="attendanceNote" class="form-label">Note (Optional)</label>
+                        <textarea class="form-control" id="attendanceNote" rows="2"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Save Record</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Bundle with Popper (No need for jQuery without JS functionality) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
